@@ -16,24 +16,60 @@ class Register extends React.Component {
     username: "",
     email: "",
     password: "",
-    passwordConfiramtion: ""
+    passwordConfiramtion: "",
+    formError: null
+  };
+
+  setError = errorMessage => {
+    this.setState({
+      formError: errorMessage
+    });
   };
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  isFormEmpty = ({ username, email, password, passwordConfiramtion }) => {
+    return !username.length || !email || !password | passwordConfiramtion;
+  };
+
+  isPasswordValid = ({ password, passwordConfiramtion }) => {
+    if (password.length < 0 || passwordConfiramtion.length < 0) {
+      return false;
+    } else if (password !== passwordConfiramtion) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  formValid = () => {
+    if (this.isFormEmpty(this.state)) {
+      this.setError("Please Fill in all fields");
+      return false;
+    } else if (!this.isPasswordValid(this.state)) {
+      this.setError("password is invalid");
+      return false;
+    } else {
+      this.setError(null);
+      return true;
+    }
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(createdUser => {
-        console.log(createdUser);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (this.formValid()) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then(createdUser => {
+          console.log(createdUser);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   };
 
   render() {
