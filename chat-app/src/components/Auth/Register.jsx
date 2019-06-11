@@ -73,7 +73,13 @@ class Register extends React.Component {
   };
 
   render() {
-    const { username, email, password, passwordConfiramtion } = this.state;
+    const {
+      username,
+      email,
+      password,
+      passwordConfiramtion,
+      formError
+    } = this.state;
     return (
       <Grid textAlign="center" verticalAlign="middle" className="register">
         <Grid.Column style={{ maxWidth: 450 }} verticalAlign="middle">
@@ -128,6 +134,14 @@ class Register extends React.Component {
               </Button>
             </Segment>
           </Form>
+          <Message error>
+            {formError && (
+              <div>
+                <h3>Error</h3>
+                <p>{formError}</p>
+              </div>
+            )}
+          </Message>
           <Message>
             Aleardy a user? <Link to="/login">Login</Link>
           </Message>
