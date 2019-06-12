@@ -19,7 +19,8 @@ class Register extends React.Component {
     password: "",
     passwordConfiramtion: "",
     formError: null,
-    loading: false
+    loading: false,
+    userRef: firebase.database().ref("users")
   };
 
   setError = errorMessage => {
@@ -83,6 +84,9 @@ class Register extends React.Component {
             })
             .then(() => {
               this.setLoading(false);
+              this.saveUser(createdUser).then(() =>
+                console.log("user Saved ...")
+              );
             })
             .catch(err => {
               debugger;
@@ -95,6 +99,13 @@ class Register extends React.Component {
           this.setError(err.message);
         });
     }
+  };
+
+  saveUser = createdUser => {
+    return this.state.userRef.child(createdUser.user.uid).set({
+      name: createdUser.user.displayName,
+      avatar: createdUser.user.photoURL
+    });
   };
 
   handleInputError = inputName => {
