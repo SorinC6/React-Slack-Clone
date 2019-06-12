@@ -129,7 +129,7 @@ class Register extends React.Component {
         <Grid.Column style={{ maxWidth: 450 }} verticalAlign="middle">
           <Header as="h2" icon color="purple" textAlign="center">
             <Icon name="rocketchat" color="purple" />
-            Register
+            Woop Chat Register
           </Header>
           <Form size="large" onSubmit={this.handleSubmit}>
             <Segment stacked color="blue">
@@ -189,14 +189,16 @@ class Register extends React.Component {
               </Button>
             </Segment>
           </Form>
-          <Message error>
-            {formError && (
+
+          {formError && (
+            <Message error>
               <div>
                 <h3>Error</h3>
                 <p>{formError}</p>
               </div>
-            )}
-          </Message>
+            </Message>
+          )}
+
           <Message>
             Aleardy a user? <Link to="/login">Login</Link>
           </Message>
