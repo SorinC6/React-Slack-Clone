@@ -42,12 +42,19 @@ class Login extends React.Component {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then()
-        .catch();
+        .then(signInUser => {
+          debugger;
+          this.setLoading(false);
+        })
+        .catch(err => {
+          console.log(err.message);
+          this.setError(err.message);
+          this.setLoading(false);
+        });
     }
   };
 
-  formValid = ({ emial, password }) => {
+  formValid = ({ email, password }) => {
     return email && password;
   };
 
