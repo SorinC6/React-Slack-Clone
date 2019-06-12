@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
@@ -14,7 +14,13 @@ import Register from "./components/Auth/Register";
 import "semantic-ui-css/semantic.min.css";
 import firebase from "firebase";
 
-const Root = (props) => {
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+const store = createStore(() => {}, composeWithDevTools());
+
+const Root = props => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -35,9 +41,11 @@ const Root = (props) => {
 const RootWithRouter = withRouter(Root);
 
 ReactDOM.render(
-  <Router>
-    <RootWithRouter />{" "}
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <RootWithRouter />{" "}
+    </Router>
+  </Provider>,
   document.getElementById("root")
 );
 
