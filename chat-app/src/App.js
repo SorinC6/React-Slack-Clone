@@ -18,10 +18,10 @@ const App = () => (
     <Grid.Column>
       <SidePanel />
     </Grid.Column>
-    <Grid.Column style={{ marginLeft: 320 }}>
+    <Grid.Column>
       <Messages />
     </Grid.Column>
-    <Grid.Column width={4}>
+    <Grid.Column>
       <MetaPanel />
     </Grid.Column>
   </Grid>
