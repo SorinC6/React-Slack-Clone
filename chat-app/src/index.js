@@ -17,8 +17,9 @@ import firebase from "firebase";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import rootReducer from "./store/reducers/index";
 
-const store = createStore(() => {}, composeWithDevTools());
+const store = createStore(rootReducer, composeWithDevTools());
 
 const Root = props => {
   useEffect(() => {
