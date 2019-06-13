@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Grid, GridColumn, Header, Icon, Dropdown } from "semantic-ui-react";
+import {
+  Grid,
+  GridColumn,
+  Header,
+  Icon,
+  Dropdown,
+  Image
+} from "semantic-ui-react";
 import firebase from "../../Firebase/firebaseConfig";
 import { connect } from "react-redux";
 
 const UserPanel = props => {
   const [user, setUser] = useState("");
+  const [userPhotoURL, setUserPhotoURL] = useState("");
 
   useEffect(() => {
     props.user && setUser(props.user);
+    props.userURL && setUserPhotoURL(props.userURL);
   });
   const dropDownOption = () => {
     return [
@@ -48,7 +57,14 @@ const UserPanel = props => {
           </Header>
         </Grid.Row>
         <Header as="h4" style={{ padding: "20px" }}>
-          <Dropdown trigger={<span>User</span>} options={dropDownOption()} />
+          <Dropdown
+            trigger={
+              <span>
+                {<Image src={userPhotoURL} spaced="right" avatar />} {user}
+              </span>
+            }
+            options={dropDownOption()}
+          />
         </Header>
       </GridColumn>
     </Grid>
@@ -56,9 +72,9 @@ const UserPanel = props => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
-    user: state.user.currentUser.displayName
+    user: state.user.currentUser.displayName,
+    userURL: state.user.currentUser.photoURL
   };
 };
 
