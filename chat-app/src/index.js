@@ -11,8 +11,9 @@ import {
 } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
+import Spinner from "./components/Spinner/Spinner";
 import "semantic-ui-css/semantic.min.css";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
@@ -25,6 +26,7 @@ const store = createStore(rootReducer, composeWithDevTools());
 
 const Root = props => {
   useEffect(() => {
+    console.log(props.isLoading);
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         props.setUser(user);
@@ -33,18 +35,26 @@ const Root = props => {
     });
   }, []);
 
-  return (
-    <Switch>
-      <Route exact path="/" component={App} />
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
-    </Switch>
-  );
+  if (props.isLoading) return <Spinner />;
+  else
+    return (
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+      </Switch>
+    );
+};
+
+const mapStateToProps = state => {
+  return {
+    isLoading: state.user.isLoading
+  };
 };
 
 const RootWithRouter = withRouter(
   connect(
-    null,
+    mapStateToProps,
     { setUser }
   )(Root)
 );
