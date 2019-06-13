@@ -18,6 +18,8 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./store/reducers/index";
+import { connect } from "react-redux";
+import { setUser } from "./store/actions/index";
 
 const store = createStore(rootReducer, composeWithDevTools());
 
@@ -25,10 +27,11 @@ const Root = props => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        props.setUser(user);
         props.history.push("/");
       }
     });
-  });
+  }, []);
 
   return (
     <Switch>
@@ -39,7 +42,12 @@ const Root = props => {
   );
 };
 
-const RootWithRouter = withRouter(Root);
+const RootWithRouter = withRouter(
+  connect(
+    null,
+    { setUser }
+  )(Root)
+);
 
 ReactDOM.render(
   <Provider store={store}>
