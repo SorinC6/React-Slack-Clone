@@ -20,20 +20,19 @@ import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./store/reducers/index";
 import { connect } from "react-redux";
-import { setUser } from "./store/actions/index";
+import { setUser, clearUser } from "./store/actions/index";
 
 const store = createStore(rootReducer, composeWithDevTools());
 
 const Root = props => {
   useEffect(() => {
-    console.log(props.isLoading);
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         props.setUser(user);
         props.history.push("/");
       } else {
         props.history.push("/login");
-        clearUser();
+        props.clearUser();
       }
     });
   }, []);
@@ -58,7 +57,7 @@ const mapStateToProps = state => {
 const RootWithRouter = withRouter(
   connect(
     mapStateToProps,
-    { setUser }
+    { setUser, clearUser }
   )(Root)
 );
 

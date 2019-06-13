@@ -12,7 +12,7 @@ const UserPanel = () => {
             SignIn as <strong>User</strong>
           </span>
         ),
-        disable: true
+        //disable: true
       },
       {
         key: "avatar",
