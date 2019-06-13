@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, GridColumn, Header, Icon, Dropdown } from "semantic-ui-react";
 import firebase from "../../Firebase/firebaseConfig";
+import { connect } from "react-redux";
 
-const UserPanel = () => {
+const UserPanel = props => {
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    props.user && setUser(props.user);
+  });
   const dropDownOption = () => {
     return [
       {
         key: "user",
         text: (
           <span>
-            SignIn as <strong>User</strong>
+            SignIn as <strong>{user}</strong>
           </span>
-        ),
+        )
         //disable: true
       },
       {
@@ -49,4 +55,11 @@ const UserPanel = () => {
   );
 };
 
-export default UserPanel;
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    user: state.user.currentUser.displayName
+  };
+};
+
+export default connect(mapStateToProps)(UserPanel);
