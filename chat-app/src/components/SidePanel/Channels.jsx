@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import { Menu, Icon, Modal, Form, Input } from "semantic-ui-react";
+import { Menu, Icon, Modal, Form, Input, Button } from "semantic-ui-react";
 
-const Channels = props => {
+const Channel = props => {
   const [channels, setChannels] = useState([]);
   const [channelName, setChannelName] = useState("");
   const [channelDetail, setChannelDetail] = useState("");
   const [modal, setModal] = useState(false);
 
   return (
-    <Menu.Menu style={{ paddingBottom: "2em" }}>
-      <Menu.Item>
-        <span>
-          <Icon name="exchange" /> Channels
-        </span>
-        {} <Icon name="add" />
-      </Menu.Item>
+    <div>
+      <Menu.Menu style={{ paddingBottom: "2em" }}>
+        <Menu.Item>
+          <span>
+            <Icon name="exchange" /> Channels
+          </span>
+          {} <Icon name="add" onClick={() => setModal(true)} />
+        </Menu.Item>
+      </Menu.Menu>
       <Modal basic open={modal} onClose={() => setModal(false)}>
         <Modal.Header>Add a Channel</Modal.Header>
         <Modal.Content>
@@ -37,10 +39,17 @@ const Channels = props => {
             </Form.Field>
           </Form>
         </Modal.Content>
+        <Modal.Actions>
+          <Button color="yellow" inverted>
+            <Icon name="checkmark" /> Add
+          </Button>
+          <Button color="red" inverted onClick={() => setModal(false)}>
+            <Icon name="remove"  /> Cancel
+          </Button>
+        </Modal.Actions>
       </Modal>
-    </Menu.Menu>
-    //add channel modal
+    </div>
   );
 };
 
-export default Channels;
+export default Channel;
