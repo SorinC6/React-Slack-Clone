@@ -31,6 +31,9 @@ const Root = props => {
       if (user) {
         props.setUser(user);
         props.history.push("/");
+      } else {
+        props.history.push("/login");
+        clearUser();
       }
     });
   }, []);
