@@ -15,9 +15,18 @@ const Channel = props => {
   );
 
   useEffect(() => {
+    addEventListener();
     props.user && setUser(props.user);
     props.userURL && setUserPhotoURL(props.userURL);
-  });
+  }, []);
+
+  const addEventListener = () => {
+    let loadedChannels = [];
+    channelRef.on("child_added", snap => {
+      loadedChannels.push(snap.val());
+      setChannels(loadedChannels);
+    });
+  };
 
   const addChannel = () => {
     const key = channelRef.push().key;
@@ -58,6 +67,10 @@ const Channel = props => {
     return channelName && channelDetail;
   };
 
+  const displayChannels = () =>{
+    //channels.length > 0 && channels.map()
+  }
+
   return (
     <div>
       <Menu.Menu style={{ paddingBottom: "2em" }}>
@@ -67,6 +80,7 @@ const Channel = props => {
           </span>
           {} <Icon name="add" onClick={() => setModal(true)} />
         </Menu.Item>
+        {displayChannels}
       </Menu.Menu>
       <Modal basic open={modal} onClose={() => setModal(false)}>
         <Modal.Header>Add a Channel</Modal.Header>
