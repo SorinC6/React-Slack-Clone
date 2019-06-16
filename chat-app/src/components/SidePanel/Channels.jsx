@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "../../Firebase/firebaseConfig";
 import { Menu, Icon, Modal, Form, Input, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
+import { setCurrentChannel } from "../../store/actions/index";
 
 const Channel = props => {
   const [user, setUser] = useState("");
@@ -137,4 +138,11 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Channel);
+const mapDispatchToProps = {
+  setCurrentChannel
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Channel);
