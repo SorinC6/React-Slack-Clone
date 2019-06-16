@@ -2,3 +2,8 @@
   height: 102vh;
   background: lightskyblue;
 }
+
+.message {
+  height: 370px;
+  overflow-y: scroll;
+}
