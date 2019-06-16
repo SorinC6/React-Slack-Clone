@@ -1,32 +1,10 @@
-import * as types from "../actions/types";
 import { combineReducers } from "redux";
-
-const initialState = {
-  currentUser: null,
-  isLoading: true
-};
-
-const user_reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case types.SET_USER:
-      return {
-        ...state,
-        currentUser: action.payload.currentUser,
-        isLoading: false
-      };
-    case types.CLEAR_USER:
-      return {
-        ...state,
-        currentUser: null,
-        isLoading: false
-      };
-    default:
-      return state;
-  }
-};
+import { user_reducer } from "./user_reducer";
+import { channel_reducer } from "./channel_reducer";
 
 const rootReducer = combineReducers({
-  user: user_reducer
+  user: user_reducer,
+  channel: channel_reducer
 });
 
 export default rootReducer;

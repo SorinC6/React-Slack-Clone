@@ -2,3 +2,16 @@
   height: 102vh;
   background: lightskyblue;
 }
+
+.message {
+  height: 370px;
+  overflow-y: scroll;
+}
+
+.segment_form {
+  position: fixed !important;
+  margin-left: 310px !important;
+  z-index: 200;
+  left: 0;
+  right: 0;
+}

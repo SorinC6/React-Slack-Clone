@@ -1,30 +1,29 @@
 import React from "react";
 import "./App.css";
-import { Grid } from "semantic-ui-react";
 import ColorPanel from "./components/ColorPanel/ColorPanel";
 import SidePanel from "./components/SidePanel/SidePanel";
 import Messages from "./components/Messages/Messages";
 import MetaPanel from "./components/MetaPanel/MetaPanel";
+import styled from "styled-components";
+import { connect } from "react-redux";
 
 const App = () => (
-  <Grid
-    columns="equal"
-    className="app"
-    style={{ background: "#eee", height: "50px" }}
-  >
-    <Grid.Column>
-      <ColorPanel />
-    </Grid.Column>
-    <Grid.Column>
-      <SidePanel />
-    </Grid.Column>
-    <Grid.Column>
-      <Messages />
-    </Grid.Column>
-    <Grid.Column>
-      <MetaPanel />
-    </Grid.Column>
-  </Grid>
+  <MainWrapper>
+    <ColorPanel />
+    <SidePanel />
+    <Messages />
+    <MetaPanel />
+  </MainWrapper>
 );
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    currentChannel: state.channel.currentChannel
+  };
+};
+
+export default connect()(App);
+
+const MainWrapper = styled.div`
+  display: flex;
+`;
