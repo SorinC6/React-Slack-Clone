@@ -7,12 +7,24 @@ const Channel = props => {
   const [channelDetail, setChannelDetail] = useState("");
   const [modal, setModal] = useState(false);
 
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    if (isFormValid()) {
+      console.log("channeladded");
+    }
+  };
+
+  const isFormValid = () => {
+    return channelName && channelDetail;
+  };
+
   return (
     <div>
       <Menu.Menu style={{ paddingBottom: "2em" }}>
         <Menu.Item>
           <span>
-            <Icon name="exchange" /> Channels
+            <Icon name="exchange" /> Channels {channels.length}
           </span>
           {} <Icon name="add" onClick={() => setModal(true)} />
         </Menu.Item>
@@ -20,7 +32,7 @@ const Channel = props => {
       <Modal basic open={modal} onClose={() => setModal(false)}>
         <Modal.Header>Add a Channel</Modal.Header>
         <Modal.Content>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Field>
               <Input
                 fluid
@@ -40,11 +52,11 @@ const Channel = props => {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="yellow" inverted>
+          <Button color="yellow" inverted onClick={handleSubmit}>
             <Icon name="checkmark" /> Add
           </Button>
           <Button color="red" inverted onClick={() => setModal(false)}>
-            <Icon name="remove"  /> Cancel
+            <Icon name="remove" /> Cancel
           </Button>
         </Modal.Actions>
       </Modal>
