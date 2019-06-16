@@ -67,6 +67,11 @@ const Channel = props => {
     return channelName && channelDetail;
   };
 
+  const changeChannel = channel => {
+    //setting the channel
+    console.log(channel);
+  };
+
   return (
     <div>
       <Menu.Menu style={{ paddingBottom: "2em" }}>
@@ -81,7 +86,7 @@ const Channel = props => {
             return (
               <Menu.Item
                 key={channel.id}
-                onClick={() => console.log(channel)}
+                onClick={() => changeChannel(channel)}
                 name={channel.name}
                 style={{ opacity: 0.7 }}
               >
