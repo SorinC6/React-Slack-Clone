@@ -10,6 +10,7 @@ const Channel = props => {
   const [channels, setChannels] = useState([]);
   const [channelName, setChannelName] = useState("");
   const [channelDetail, setChannelDetail] = useState("");
+  const [activeChannel, setActiveChannelId] = useState("");
   const [modal, setModal] = useState(false);
   const [channelRef, setChannelRef] = useState(
     firebase.database().ref("channels")
@@ -26,7 +27,15 @@ const Channel = props => {
     channelRef.on("child_added", snap => {
       loadedChannels.push(snap.val());
       setChannels(loadedChannels);
+      setFirstChannel();
     });
+  };
+
+  const setFirstChannel = () => {
+    const firstChannel = channels[0];
+    channels.length > 0 &&
+      props.setCurrentChannel(firstChannel) &&
+      setActiveChannelId(firstChannel);
   };
 
   const addChannel = () => {
@@ -68,9 +77,14 @@ const Channel = props => {
     return channelName && channelDetail;
   };
 
+  const setActiveChannel = channel => {
+    setActiveChannelId(channel.id);
+  };
+
   const changeChannel = channel => {
     //setting the channel
-    console.log(channel);
+    setActiveChannel(channel);
+    props.setCurrentChannel(channel);
   };
 
   return (
@@ -90,6 +104,7 @@ const Channel = props => {
                 onClick={() => changeChannel(channel)}
                 name={channel.name}
                 style={{ opacity: 0.7 }}
+                active={channel.id === activeChannel}
               >
                 # {channel.name}
               </Menu.Item>
