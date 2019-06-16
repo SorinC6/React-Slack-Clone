@@ -18,7 +18,7 @@ const Channel = props => {
     addEventListener();
     props.user && setUser(props.user);
     props.userURL && setUserPhotoURL(props.userURL);
-  }, []);
+  }, [channels.length]);
 
   const addEventListener = () => {
     let loadedChannels = [];
@@ -30,7 +30,7 @@ const Channel = props => {
 
   const addChannel = () => {
     const key = channelRef.push().key;
-
+    debugger;
     const newChannel = {
       id: key,
       name: channelName,
@@ -67,10 +67,6 @@ const Channel = props => {
     return channelName && channelDetail;
   };
 
-  const displayChannels = () =>{
-    //channels.length > 0 && channels.map()
-  }
-
   return (
     <div>
       <Menu.Menu style={{ paddingBottom: "2em" }}>
@@ -80,7 +76,19 @@ const Channel = props => {
           </span>
           {} <Icon name="add" onClick={() => setModal(true)} />
         </Menu.Item>
-        {displayChannels}
+        {channels.length > 0 &&
+          channels.map(channel => {
+            return (
+              <Menu.Item
+                key={channel.id}
+                onClick={() => console.log(channel)}
+                name={channel.name}
+                style={{ opacity: 0.7 }}
+              >
+                # {channel.name}
+              </Menu.Item>
+            );
+          })}
       </Menu.Menu>
       <Modal basic open={modal} onClose={() => setModal(false)}>
         <Modal.Header>Add a Channel</Modal.Header>
