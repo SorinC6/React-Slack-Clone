@@ -12,12 +12,8 @@ const App = () => (
     className="app"
     style={{ background: "#eee", height: "50px" }}
   >
-    <Grid.Column>
-      <ColorPanel />
-    </Grid.Column>
-    <Grid.Column>
-      <SidePanel />
-    </Grid.Column>
+    <ColorPanel />
+    <SidePanel />
     <Grid.Column>
       <Messages />
     </Grid.Column>
