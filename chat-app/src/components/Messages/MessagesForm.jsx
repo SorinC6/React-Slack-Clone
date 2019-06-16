@@ -12,7 +12,7 @@ const MessagesForm = () => {
         labelPosition="left"
         placeholder="write your message"
       />
-      <Button.Group icon width="2">
+      <Button.Group icon widths="2">
         <Button
           color="orange"
           content="Add Reply"
