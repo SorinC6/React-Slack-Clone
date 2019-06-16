@@ -22,6 +22,12 @@ const Channel = props => {
     props.userURL && setUserPhotoURL(props.userURL);
   }, [channels.length]);
 
+  useEffect(() => {
+    return () => {
+      channelRef.off();
+    };
+  }, []);
+
   const addEventListener = () => {
     let loadedChannels = [];
     channelRef.on("child_added", snap => {
