@@ -7,22 +7,28 @@ import MetaPanel from "./components/MetaPanel/MetaPanel";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-const App = () => (
-  <MainWrapper>
-    <ColorPanel />
-    <SidePanel />
-    <Messages />
-    <MetaPanel />
-  </MainWrapper>
-);
+const App = props => {
+  return (
+    <MainWrapper>
+      <ColorPanel />
+      <SidePanel />
+      <Messages
+        currentChannel={props.currentChannel}
+        currentUser={props.user}
+      />
+      <MetaPanel />
+    </MainWrapper>
+  );
+};
 
 const mapStateToProps = state => {
   return {
+    user: state.user.currentUser,
     currentChannel: state.channel.currentChannel
   };
 };
 
-export default connect()(App);
+export default connect(mapStateToProps)(App);
 
 const MainWrapper = styled.div`
   display: flex;

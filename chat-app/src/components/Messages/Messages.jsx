@@ -5,14 +5,14 @@ import MessagesForm from "./MessagesForm";
 import styled from "styled-components";
 import firebase from "../../Firebase/firebaseConfig";
 
-const Messages = () => {
+const Messages = props => {
   const [firebaseRef, setFirebaseRef] = useState(null);
+  // const [channel, setChannel] = useState(null);
 
   useEffect(() => {
     setFirebaseRef(firebase.database().ref("messages"));
+    // setChannel(props.currentChannel);
   }, []);
-
- 
 
   return (
     <MessagesWrapper>
@@ -21,7 +21,11 @@ const Messages = () => {
       <Segment>
         <Comment.Group className="message">{/* Messages*/}</Comment.Group>
       </Segment>
-      <MessagesForm messagesRef={firebaseRef} />
+      <MessagesForm
+        messagesRef={firebaseRef}
+        currentChannel={props.currentChannel}
+        user={props.currentUser}
+      />
     </MessagesWrapper>
   );
 };
