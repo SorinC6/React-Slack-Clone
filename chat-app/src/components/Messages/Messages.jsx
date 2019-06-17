@@ -7,12 +7,25 @@ import firebase from "../../Firebase/firebaseConfig";
 
 const Messages = props => {
   const [firebaseRef, setFirebaseRef] = useState(null);
-  // const [channel, setChannel] = useState(null);
 
   useEffect(() => {
     setFirebaseRef(firebase.database().ref("messages"));
-    // setChannel(props.currentChannel);
-  }, []);
+    if (props.currentChannel && props.currentUser) {
+      addListeners(props.currentChannel.id);
+    }
+  }, [props.currentChannel]);
+
+  const addListeners = channelId => {
+    addMessageListener(channelId);
+  };
+
+  const addMessageListener = channelId => {
+    const loadedMessages = [];
+    firebaseRef.child(channelId).on("child_added", snap => {
+      loadedMessages.push(snap.val());
+      //console.log('loaded messages', loadedMessages);
+    });
+  };
 
   return (
     <MessagesWrapper>
