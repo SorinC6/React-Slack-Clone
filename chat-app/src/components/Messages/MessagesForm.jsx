@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import firebase from "../../Firebase/firebaseConfig";
 import { Segment, Button, Input } from "semantic-ui-react";
+import FileModal from "./FileModal";
 
 const MessagesForm = props => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [modal, setModal] = useState(false);
 
   const sendMessage = () => {
     setError("");
@@ -69,7 +71,10 @@ const MessagesForm = props => {
           content="Upload Media"
           labelPosition="right"
           icon="cloud upload"
+          onClick={() => setModal(true)}
         />
+
+        <FileModal modal={modal} closeModal={()=>setModal(false)} />
       </Button.Group>
     </Segment>
   );
