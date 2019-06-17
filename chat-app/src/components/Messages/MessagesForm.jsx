@@ -39,9 +39,6 @@ const MessagesForm = props => {
         avatar: props.user.photoURL
       }
     };
-
-    console.log(message);
-
     return messageBody;
   };
 

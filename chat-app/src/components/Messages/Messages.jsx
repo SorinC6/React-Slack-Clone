@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Segment, Comment } from "semantic-ui-react";
 import MessagesHeader from "./MessagesHeader";
 import MessagesForm from "./MessagesForm";
@@ -6,71 +6,78 @@ import MessageComp from "./MessageComp";
 import styled from "styled-components";
 import firebase from "../../Firebase/firebaseConfig";
 
-const Messages = props => {
-  const [firebaseRef, setFirebaseRef] = useState(null);
-  const [messeges, setMesseges] = useState([]);
-  const [messegesLoading, setMessegesLoading] = useState(true);
+class Messages extends React.Component {
+  // const [firebaseRef, setFirebaseRef] = useState(null);
+  // const [messeges, setMesseges] = useState([]);
+  // const [messegesLoading, setMessegesLoading] = useState(true);
 
-  useEffect(() => {
-    setFirebaseRef(firebase.database().ref("messages"));
-    if (props.currentChannel && props.currentUser) {
-      addListeners(props.currentChannel.id);
-    }
-  }, [props.currentChannel]);
-
-  const addListeners = channelId => {
-    addMessageListener(channelId);
+  state = {
+    firebaseRef: firebase.database().ref("messages"),
+    messages: [],
+    messegesLoading: true,
+    currentChannel: this.props.currentChannel,
+    currentUser: this.props.currentUser
   };
 
-  const addMessageListener = channelId => {
+  componentDidMount() {
+    // console.log(this.props);
+    if (this.state.currentChannel && this.state.currentUser) {
+      // debugger;
+      this.addListeners(this.state.currentChannel.id);
+    }
+  }
+
+  addListeners = channelId => {
+    this.addMessageListener(channelId);
+  };
+
+  addMessageListener = channelId => {
     const loadedMessages = [];
-    firebaseRef.child(channelId).on("child_added", snap => {
+    this.state.firebaseRef.child(channelId).on("child_added", snap => {
+      //console.log(snap.val());
       loadedMessages.push(snap.val());
-      setMesseges(loadedMessages);
-      setMessegesLoading(false);
+      console.log(loadedMessages);
+      this.setState({
+        messages: loadedMessages,
+        messegesLoading: true
+      });
     });
   };
 
-  const displayMessages = mess => {
-    //console.log(mess);
-    mess.length > 0 &&
-      mess.map(item => {
+  displayMessages = () => {
+    //debugger
+    return (
+      this.state.messages.length > 0 &&
+      this.state.messages.map(item => {
         return (
           <MessageComp
             key={item.timestamp}
             message={item}
-            user={props.currentUser}
+            user={this.props.currentUser}
           />
         );
-      });
+      })
+    );
   };
+  render() {
+    return (
+      <MessagesWrapper>
+        <MessagesHeader />
 
-  return (
-    <MessagesWrapper>
-      <MessagesHeader />
-
-      <Segment>
-        <Comment.Group className="message">
-          {messeges.length > 0 &&
-            messeges.map(item => {
-              return (
-                <MessageComp
-                  key={item.timestamp}
-                  message={item}
-                  user={props.currentUser}
-                />
-              );
-            })}
-        </Comment.Group>
-      </Segment>
-      <MessagesForm
-        messagesRef={firebaseRef}
-        currentChannel={props.currentChannel}
-        user={props.currentUser}
-      />
-    </MessagesWrapper>
-  );
-};
+        <Segment>
+          <Comment.Group className="message">
+            {this.displayMessages()}
+          </Comment.Group>
+        </Segment>
+        <MessagesForm
+          messagesRef={this.state.firebaseRef}
+          currentChannel={this.props.currentChannel}
+          user={this.props.currentUser}
+        />
+      </MessagesWrapper>
+    );
+  }
+}
 
 export default Messages;
 

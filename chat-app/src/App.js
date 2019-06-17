@@ -12,10 +12,12 @@ const App = props => {
     <MainWrapper>
       <ColorPanel />
       <SidePanel />
-      <Messages
-        currentChannel={props.currentChannel}
-        currentUser={props.user}
-      />
+      {props.currentChannel && (
+        <Messages
+          currentChannel={props.currentChannel}
+          currentUser={props.user}
+        />
+      )}
       <MetaPanel />
     </MainWrapper>
   );
