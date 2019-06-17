@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Segment, Comment } from "semantic-ui-react";
 import MessagesHeader from "./MessagesHeader";
 import MessagesForm from "./MessagesForm";
+import MessageComp from "./MessageComp";
 import styled from "styled-components";
 import firebase from "../../Firebase/firebaseConfig";
 
@@ -25,8 +26,17 @@ const Messages = props => {
     const loadedMessages = [];
     firebaseRef.child(channelId).on("child_added", snap => {
       loadedMessages.push(snap.val());
-      //console.log('loaded messages', loadedMessages);
+      setMesseges(loadedMessages);
+      setMessegesLoading(false);
     });
+  };
+
+  const displayMessages = mess => {
+    mess.length > 0 &&
+      mess.map(item => {
+        console.log(item);
+        return <MessageComp key={item.timestamp} />;
+      });
   };
 
   return (
@@ -34,7 +44,9 @@ const Messages = props => {
       <MessagesHeader />
 
       <Segment>
-        <Comment.Group className="message">{/* Messages*/}</Comment.Group>
+        <Comment.Group className="message">
+          {displayMessages(messeges)}
+        </Comment.Group>
       </Segment>
       <MessagesForm
         messagesRef={firebaseRef}
