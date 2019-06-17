@@ -7,6 +7,8 @@ import firebase from "../../Firebase/firebaseConfig";
 
 const Messages = props => {
   const [firebaseRef, setFirebaseRef] = useState(null);
+  const [messeges, setMesseges] = useState([]);
+  const [messegesLoading, setMessegesLoading] = useState(true);
 
   useEffect(() => {
     setFirebaseRef(firebase.database().ref("messages"));
