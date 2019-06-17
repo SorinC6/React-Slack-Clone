@@ -61,6 +61,7 @@ const MessagesForm = props => {
       <Button.Group icon widths="2">
         <Button
           onClick={sendMessage}
+          disabled={loading}
           color="orange"
           content="Add Reply"
           labelPosition="left"
