@@ -34,8 +34,14 @@ const Messages = props => {
   const displayMessages = mess => {
     mess.length > 0 &&
       mess.map(item => {
-        console.log(item);
-        return <MessageComp key={item.timestamp} />;
+        //console.log(item);
+        return (
+          <MessageComp
+            key={item.timestamp}
+            message={item}
+            user={props.currentUser}
+          />
+        );
       });
   };
 

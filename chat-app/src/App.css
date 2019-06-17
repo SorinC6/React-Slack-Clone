@@ -15,3 +15,8 @@
   left: 0;
   right: 0;
 }
+
+.message_self {
+  border-left: 2px solid violet;
+  padding-left: 8px;
+}
