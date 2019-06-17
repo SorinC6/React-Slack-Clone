@@ -32,9 +32,9 @@ const Messages = props => {
   };
 
   const displayMessages = mess => {
+    //console.log(mess);
     mess.length > 0 &&
       mess.map(item => {
-        //console.log(item);
         return (
           <MessageComp
             key={item.timestamp}
@@ -51,7 +51,16 @@ const Messages = props => {
 
       <Segment>
         <Comment.Group className="message">
-          {displayMessages(messeges)}
+          {messeges.length > 0 &&
+            messeges.map(item => {
+              return (
+                <MessageComp
+                  key={item.timestamp}
+                  message={item}
+                  user={props.currentUser}
+                />
+              );
+            })}
         </Comment.Group>
       </Segment>
       <MessagesForm

@@ -3,7 +3,7 @@ import { Comment } from "semantic-ui-react";
 import moment from "moment";
 
 const MessageComp = ({ message, user }) => {
-  console.log("propsss", message);
+  console.log("proprgrgrgrgss", message.user.avatar);
 
   const isOwnMessage = (message, user) => {
     return message.user.id === user.uid ? "message_self" : "";
@@ -13,7 +13,7 @@ const MessageComp = ({ message, user }) => {
 
   return (
     <Comment>
-      <Comment.Avatar>{message.user.avatar}</Comment.Avatar>
+      <Comment.Avatar src={message.user.avatar} />
       <Comment.Content className={isOwnMessage(message, user)}>
         <Comment.Author>{message.user.name}</Comment.Author>
         <Comment.Metadata>{timeFromNow(message.timestamp)}</Comment.Metadata>
