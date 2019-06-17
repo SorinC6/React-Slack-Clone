@@ -7,10 +7,6 @@ import styled from "styled-components";
 import firebase from "../../Firebase/firebaseConfig";
 
 class Messages extends React.Component {
-  // const [firebaseRef, setFirebaseRef] = useState(null);
-  // const [messeges, setMesseges] = useState([]);
-  // const [messegesLoading, setMessegesLoading] = useState(true);
-
   state = {
     firebaseRef: firebase.database().ref("messages"),
     messages: [],
@@ -20,7 +16,6 @@ class Messages extends React.Component {
   };
 
   componentDidMount() {
-    // console.log(this.props);
     if (this.state.currentChannel && this.state.currentUser) {
       // debugger;
       this.addListeners(this.state.currentChannel.id);
@@ -36,7 +31,6 @@ class Messages extends React.Component {
     this.state.firebaseRef.child(channelId).on("child_added", snap => {
       //console.log(snap.val());
       loadedMessages.push(snap.val());
-      console.log(loadedMessages);
       this.setState({
         messages: loadedMessages,
         messegesLoading: true
@@ -60,19 +54,20 @@ class Messages extends React.Component {
     );
   };
   render() {
+    //console.log(this.state.currentChannel.id);
     return (
       <MessagesWrapper>
         <MessagesHeader />
 
         <Segment>
-          <Comment.Group className="message">
+          <Comment.Group className="mess">
             {this.displayMessages()}
           </Comment.Group>
         </Segment>
         <MessagesForm
           messagesRef={this.state.firebaseRef}
-          currentChannel={this.props.currentChannel}
-          user={this.props.currentUser}
+          currentChannel={this.state.currentChannel}
+          user={this.state.currentUser}
         />
       </MessagesWrapper>
     );
