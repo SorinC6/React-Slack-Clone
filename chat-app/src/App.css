@@ -22,5 +22,10 @@
 }
 
 .mess_image {
-  padding: 1em;
+  padding: 5px;
+}
+
+.text-mess {
+  margin-bottom: 10px;
+  padding: 0;
 }

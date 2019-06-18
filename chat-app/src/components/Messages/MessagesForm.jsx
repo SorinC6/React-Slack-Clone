@@ -75,7 +75,7 @@ const MessagesForm = props => {
   };
 
   const createMessage = (fileUrl = null) => {
-    debugger
+    //debugger
     const messageBody = {
       timestamp: firebase.database.ServerValue.TIMESTAMP,
       user: {
