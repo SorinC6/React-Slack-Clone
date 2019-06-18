@@ -20,3 +20,12 @@
   border-left: 2px solid violet;
   padding-left: 8px;
 }
+
+.mess_image {
+  padding: 5px;
+}
+
+.text-mess {
+  margin-bottom: 10px;
+  padding: 0;
+}

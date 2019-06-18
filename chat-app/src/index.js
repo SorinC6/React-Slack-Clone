@@ -17,11 +17,11 @@ import firebase from "firebase/app";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./store/reducers/index";
 import { connect } from "react-redux";
 import { setUser, clearUser } from "./store/actions/index";
 
+import { composeWithDevTools } from "redux-devtools-extension";
 const store = createStore(rootReducer, composeWithDevTools());
 
 const Root = props => {
