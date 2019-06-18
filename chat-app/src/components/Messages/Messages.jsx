@@ -48,8 +48,9 @@ class Messages extends React.Component {
       return acc;
     }, []);
 
+    const plural = uniqueUsers.length > 1 || uniqueUsers.length === 0;
     this.setState({
-      numberOfUnique: `${uniqueUsers.length} users`
+      numberOfUnique: `${uniqueUsers.length} user${plural ? "s" : ""}`
     });
   };
 
