@@ -38,8 +38,6 @@ class Messages extends React.Component {
     });
   };
 
- 
-
   displayMessages = () => {
     //debugger
     return (
@@ -55,11 +53,16 @@ class Messages extends React.Component {
       })
     );
   };
+
+  displayChannelName = channel => (channel ? `#${channel.name}` : "");
+
   render() {
     //console.log(this.state.currentChannel.id);
     return (
       <MessagesWrapper>
-        <MessagesHeader />
+        <MessagesHeader
+          channelName={this.displayChannelName(this.state.currentChannel)}
+        />
 
         <Segment>
           <Comment.Group className="mess">
