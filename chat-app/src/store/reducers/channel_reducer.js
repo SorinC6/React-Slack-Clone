@@ -1,7 +1,8 @@
 import * as types from "../actions/types";
 
 const initialState = {
-  currentChannel: null
+  currentChannel: null,
+  isPrivateChannel: false
 };
 
 export const channel_reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ export const channel_reducer = (state = initialState, action) => {
       return {
         ...state,
         currentChannel: action.payload.currentChannel
+      };
+    case types.SET_PRIVATE_CHANNEL:
+      return {
+        ...state,
+        isPrivateChannel: action.payload.isPrivateChannel
       };
     default:
       return state;
