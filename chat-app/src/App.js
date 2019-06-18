@@ -8,14 +8,18 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 
 const App = props => {
+  //console.log(props.currentChannel);
   return (
     <MainWrapper>
       <ColorPanel />
       <SidePanel />
-      <Messages
-        currentChannel={props.currentChannel}
-        currentUser={props.user}
-      />
+      {props.currentChannel && (
+        <Messages
+          key={props.currentChannel && props.currentChannel.id}
+          currentChannel={props.currentChannel}
+          currentUser={props.user}
+        />
+      )}
       <MetaPanel />
     </MainWrapper>
   );
