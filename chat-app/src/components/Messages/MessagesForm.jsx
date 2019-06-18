@@ -32,7 +32,7 @@ const MessagesForm = props => {
         err => {
           //debugger;
           setError(err);
-          setUploadState(err);
+          setUploadState("error");
           setUploadTask(null);
         },
         () => {
@@ -45,7 +45,7 @@ const MessagesForm = props => {
             .catch(err => {
               // debugger;
               setError(err);
-              setUploadState(err);
+              setUploadState("error");
               setUploadTask(null);
             });
         }
@@ -102,18 +102,18 @@ const MessagesForm = props => {
     const ref = props.messagesRef;
     const filePath = `chat/public/${uuid4()}.jpg`;
 
-    setUploadState("uploading...");
+    setUploadState("uploading");
     setUploadTask(storageRef.child(filePath).put(file, metadata));
   };
 
   const sendFileMessage = (fileUrl, ref, pathToUpload) => {
-   //debugger;
+    //debugger;
     ref
       .child(pathToUpload)
       .push()
       .set(createMessage(fileUrl))
       .then(() => {
-        setUploadState("Done");
+        setUploadState("done");
       })
       .catch(err => {
         setError(err);
@@ -148,6 +148,8 @@ const MessagesForm = props => {
           labelPosition="right"
           icon="cloud upload"
           onClick={() => setModal(true)}
+          disabled={uploadState === "uploading"}
+          loading={uploadState === "uploading"}
         />
 
         <FileModal
