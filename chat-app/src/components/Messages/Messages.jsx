@@ -38,6 +38,8 @@ class Messages extends React.Component {
     });
   };
 
+ 
+
   displayMessages = () => {
     //debugger
     return (
