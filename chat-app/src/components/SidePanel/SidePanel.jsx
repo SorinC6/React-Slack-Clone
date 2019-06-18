@@ -2,6 +2,7 @@ import React from "react";
 import { Menu } from "semantic-ui-react";
 import UserPanel from "./UserPanel";
 import Channels from "./Channels";
+import DirectMessages from "./DirectMessages";
 
 const SidePanel = () => {
   return (
@@ -19,6 +20,7 @@ const SidePanel = () => {
     >
       <UserPanel />
       <Channels />
+      <DirectMessages />
     </Menu>
   );
 };

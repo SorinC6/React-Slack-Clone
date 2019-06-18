@@ -95,7 +95,7 @@ const Channel = props => {
 
   return (
     <div>
-      <Menu.Menu style={{ paddingBottom: "2em" }}>
+      <Menu.Menu className="menu">
         <Menu.Item>
           <span>
             <Icon name="exchange" /> Channels {channels.length}

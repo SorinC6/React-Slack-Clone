@@ -4,6 +4,7 @@ import { Sidebar, Menu, Divider, Button } from "semantic-ui-react";
 const ColorPanel = () => {
   return (
     <Sidebar
+      className="cpanel"
       as={Menu}
       icon="labeled"
       inverted

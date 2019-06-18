@@ -89,7 +89,10 @@ class Messages extends React.Component {
     const channelMessages = [...this.state.messages];
     const regex = new RegExp(this.state.searchTerm, "gi");
     const searchResults = channelMessages.reduce((acc, message) => {
-      if (message.content && message.content.match(regex)) {
+      if (
+        (message.content && message.content.match(regex)) ||
+        message.user.name.match(regex)
+      ) {
         acc.push(message);
       }
       return acc;
@@ -97,6 +100,14 @@ class Messages extends React.Component {
     this.setState({
       searchResults
     });
+
+    setTimeout(
+      () =>
+        this.setState({
+          searchLoading: false
+        }),
+      1000
+    );
   };
 
   render() {
@@ -107,6 +118,7 @@ class Messages extends React.Component {
           channelName={this.displayChannelName(this.state.currentChannel)}
           numUniqueUsers={this.state.numberOfUnique}
           handleSearcgChannel={this.handleSearchChannel}
+          searchLoading={this.state.searchLoading}
         />
 
         <Segment>

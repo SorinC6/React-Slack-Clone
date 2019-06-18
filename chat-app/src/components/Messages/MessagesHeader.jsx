@@ -2,7 +2,12 @@ import React from "react";
 import { Header, Segment, Input, Icon } from "semantic-ui-react";
 
 const MessegesHeader = props => {
-  const { channelName, numUniqueUsers, handleSearcgChannel } = props;
+  const {
+    channelName,
+    numUniqueUsers,
+    handleSearcgChannel,
+    searchLoading
+  } = props;
 
   return (
     <Segment clearing>
@@ -17,6 +22,7 @@ const MessegesHeader = props => {
       {/*  Search inputs for Channel */}
       <Header floated="right">
         <Input
+          loading={searchLoading}
           onChange={handleSearcgChannel}
           size="mini"
           icon="search"
