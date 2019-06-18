@@ -12,7 +12,7 @@ const App = props => {
   return (
     <MainWrapper>
       <ColorPanel />
-      <SidePanel />
+      <SidePanel user={props.user} />
       {props.currentChannel && (
         <Messages
           key={props.currentChannel && props.currentChannel.id}

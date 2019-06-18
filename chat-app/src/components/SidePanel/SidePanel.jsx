@@ -4,7 +4,7 @@ import UserPanel from "./UserPanel";
 import Channels from "./Channels";
 import DirectMessages from "./DirectMessages";
 
-const SidePanel = () => {
+const SidePanel = props => {
   return (
     <Menu
       size="large"
@@ -20,7 +20,7 @@ const SidePanel = () => {
     >
       <UserPanel />
       <Channels />
-      <DirectMessages />
+      <DirectMessages currentUser={props.user} />
     </Menu>
   );
 };
