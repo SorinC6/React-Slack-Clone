@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Icon } from "semantic-ui-react";
-import { connect } from 'react-redux';
-import { setCurrentChannel, setPrivateChannel } from '../../actions';
+import { connect } from "react-redux";
+import { setCurrentChannel, setPrivateChannel } from "../../actions";
 import firebase from "../../Firebase/firebaseConfig";
 
 class DirectMessages extends React.Component {
@@ -131,4 +131,7 @@ class DirectMessages extends React.Component {
   }
 }
 
-export default DirectMessages;
+export default connect(
+  null,
+  { setCurrentChannel, setPrivateChannel }
+)(DirectMessages);
