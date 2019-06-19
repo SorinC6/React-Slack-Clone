@@ -1,7 +1,10 @@
 import React from "react";
-import firebase from "../../firebase";
 import { connect } from "react-redux";
-import { setCurrentChannel, setPrivateChannel } from "../../actions";
+import firebase from "../../Firebase/firebaseConfig";
+import {
+  setCurrentChannel,
+  setPrivateChannel
+} from "../../store/actions/index";
 import { Menu, Icon } from "semantic-ui-react";
 
 class Starred extends React.Component {
@@ -81,7 +84,7 @@ class Starred extends React.Component {
     return (
       <Menu.Menu className="menu">
         <Menu.Item>
-          <span>
+          <span className="title">
             <Icon name="star" /> CHANNELS
           </span>{" "}
           ({starredChannels.length})

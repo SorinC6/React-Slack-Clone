@@ -18,7 +18,8 @@ class Messages extends React.Component {
     searchLoading: false,
     searchResults: [],
     isPrivateChannel: this.props.isPrivateChannel,
-    privateMessagesRef: firebase.database().ref("privateMessages")
+    privateMessagesRef: firebase.database().ref("privateMessages"),
+    isChannelStarred: false
   };
 
   componentDidMount() {
@@ -30,6 +31,15 @@ class Messages extends React.Component {
 
   addListeners = channelId => {
     this.addMessageListener(channelId);
+  };
+
+  handleStar = () => {
+    this.setState(
+      prevState => ({
+        isChannelStarred: !prevState.isChannelStarred
+      }),
+      () => this.starChannel()
+    );
   };
 
   addMessageListener = channelId => {
