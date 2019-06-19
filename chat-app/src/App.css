@@ -1,5 +1,5 @@
 .register {
-  height: 102vh;
+  height: 100vh;
   background: lightskyblue;
 }
 
@@ -28,4 +28,12 @@
 .text-mess {
   margin-bottom: 10px;
   padding: 0;
+}
+
+.menu {
+  padding-bottom: 2em;
+}
+
+.title {
+  font-size: 16px;
 }

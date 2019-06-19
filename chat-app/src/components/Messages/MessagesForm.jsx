@@ -54,10 +54,10 @@ const MessagesForm = props => {
 
   const sendMessage = () => {
     setError("");
-    const { messagesRef } = props;
-    if (message.length > 0 && props.user.uid) {
+    const {getMessagesRef } = props;
+    if (message.length > 0) {
       setLoading(true);
-      messagesRef
+      getMessagesRef()
         .child(props.currentChannel.id)
         .push()
         .set(createMessage())
@@ -96,11 +96,19 @@ const MessagesForm = props => {
     return messageBody;
   };
 
+  const getPath = () => {
+    if (props.isPrivateChannel) {
+      return `chat/private/${props.currentChannel.id}`;
+    } else {
+      return "chat/public";
+    }
+  };
+
   const uploadFile = (file, metadata) => {
     console.log(file, metadata);
     const pathUpload = props.currentChannel.id;
-    const ref = props.messagesRef;
-    const filePath = `chat/public/${uuid4()}.jpg`;
+    const ref = props.getMessagesRef();
+    const filePath = `${getPath()}/${uuid4()}.jpg`;
 
     setUploadState("uploading");
     setUploadTask(storageRef.child(filePath).put(file, metadata));

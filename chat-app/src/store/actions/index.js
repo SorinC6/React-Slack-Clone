@@ -25,3 +25,13 @@ export const setCurrentChannel = channel => {
     }
   };
 };
+
+export const setPrivateChannel = isPrivateChannel => {
+  return {
+      type: types.SET_PRIVATE_CHANNEL,
+      payload: {
+          isPrivateChannel
+      }
+  };
+};
+

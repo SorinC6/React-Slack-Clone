@@ -16,7 +16,10 @@ class Messages extends React.Component {
     numberOfUnique: "",
     searchTerm: "",
     searchLoading: false,
-    searchResults: []
+    searchResults: [],
+    isPrivateChannel: this.props.isPrivateChannel,
+    privateMessagesRef: firebase.database().ref("privateMessages"),
+    isChannelStarred: false
   };
 
   componentDidMount() {
@@ -30,9 +33,19 @@ class Messages extends React.Component {
     this.addMessageListener(channelId);
   };
 
+  handleStar = () => {
+    this.setState(
+      prevState => ({
+        isChannelStarred: !prevState.isChannelStarred
+      }),
+      () => this.starChannel()
+    );
+  };
+
   addMessageListener = channelId => {
     const loadedMessages = [];
-    this.state.firebaseRef.child(channelId).on("child_added", snap => {
+    const ref = this.getMessagesRef();
+    ref.child(channelId).on("child_added", snap => {
       //console.log(snap.val());
       loadedMessages.push(snap.val());
       this.setState({
@@ -41,6 +54,11 @@ class Messages extends React.Component {
       });
       this.countUniqueUsers(loadedMessages);
     });
+  };
+
+  getMessagesRef = () => {
+    const { firebaseRef, privateMessagesRef, isPrivateChannel } = this.state;
+    return isPrivateChannel ? privateMessagesRef : firebaseRef;
   };
 
   countUniqueUsers = messeges => {
@@ -73,7 +91,11 @@ class Messages extends React.Component {
     );
   };
 
-  displayChannelName = channel => (channel ? `#${channel.name}` : "");
+  displayChannelName = channel => {
+    return channel
+      ? `${this.state.privateChannel ? "@" : "#"}${channel.name}`
+      : "";
+  };
 
   handleSearchChannel = event => {
     this.setState(
@@ -89,7 +111,10 @@ class Messages extends React.Component {
     const channelMessages = [...this.state.messages];
     const regex = new RegExp(this.state.searchTerm, "gi");
     const searchResults = channelMessages.reduce((acc, message) => {
-      if (message.content && message.content.match(regex)) {
+      if (
+        (message.content && message.content.match(regex)) ||
+        message.user.name.match(regex)
+      ) {
         acc.push(message);
       }
       return acc;
@@ -97,6 +122,14 @@ class Messages extends React.Component {
     this.setState({
       searchResults
     });
+
+    setTimeout(
+      () =>
+        this.setState({
+          searchLoading: false
+        }),
+      1000
+    );
   };
 
   render() {
@@ -107,6 +140,8 @@ class Messages extends React.Component {
           channelName={this.displayChannelName(this.state.currentChannel)}
           numUniqueUsers={this.state.numberOfUnique}
           handleSearcgChannel={this.handleSearchChannel}
+          searchLoading={this.state.searchLoading}
+          isPrivateChannel={this.state.isPrivateChannel}
         />
 
         <Segment>
@@ -120,6 +155,8 @@ class Messages extends React.Component {
           messagesRef={this.state.firebaseRef}
           currentChannel={this.state.currentChannel}
           user={this.state.currentUser}
+          isPrivateChannel={this.state.isPrivateChannel}
+          getMessagesRef={this.getMessagesRef}
         />
       </MessagesWrapper>
     );
