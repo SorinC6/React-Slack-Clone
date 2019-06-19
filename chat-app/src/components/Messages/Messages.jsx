@@ -16,7 +16,9 @@ class Messages extends React.Component {
     numberOfUnique: "",
     searchTerm: "",
     searchLoading: false,
-    searchResults: []
+    searchResults: [],
+    isPrivateChannel: this.props.isPrivateChannel,
+    privateMessagesRef: firebase.database().ref("privateMessages")
   };
 
   componentDidMount() {
@@ -32,7 +34,8 @@ class Messages extends React.Component {
 
   addMessageListener = channelId => {
     const loadedMessages = [];
-    this.state.firebaseRef.child(channelId).on("child_added", snap => {
+    const ref = this.getMessagesRef();
+    ref.child(channelId).on("child_added", snap => {
       //console.log(snap.val());
       loadedMessages.push(snap.val());
       this.setState({
@@ -41,6 +44,11 @@ class Messages extends React.Component {
       });
       this.countUniqueUsers(loadedMessages);
     });
+  };
+
+  getMessagesRef = () => {
+    const { firebaseRef, privateMessagesRef, isPrivateChannel } = this.state;
+    return isPrivateChannel ? privateMessagesRef : firebaseRef;
   };
 
   countUniqueUsers = messeges => {
@@ -73,7 +81,11 @@ class Messages extends React.Component {
     );
   };
 
-  displayChannelName = channel => (channel ? `#${channel.name}` : "");
+  displayChannelName = channel => {
+    return channel
+      ? `${this.state.privateChannel ? "@" : "#"}${channel.name}`
+      : "";
+  };
 
   handleSearchChannel = event => {
     this.setState(
@@ -119,6 +131,7 @@ class Messages extends React.Component {
           numUniqueUsers={this.state.numberOfUnique}
           handleSearcgChannel={this.handleSearchChannel}
           searchLoading={this.state.searchLoading}
+          isPrivateChannel={this.state.isPrivateChannel}
         />
 
         <Segment>
@@ -132,6 +145,8 @@ class Messages extends React.Component {
           messagesRef={this.state.firebaseRef}
           currentChannel={this.state.currentChannel}
           user={this.state.currentUser}
+          isPrivateChannel={this.state.isPrivateChannel}
+          getMessagesRef={this.getMessagesRef}
         />
       </MessagesWrapper>
     );

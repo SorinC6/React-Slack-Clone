@@ -18,6 +18,7 @@ const App = props => {
           key={props.currentChannel && props.currentChannel.id}
           currentChannel={props.currentChannel}
           currentUser={props.user}
+          isPrivateChannel={props.isPrivateChannel}
         />
       )}
       <MetaPanel />
@@ -28,7 +29,8 @@ const App = props => {
 const mapStateToProps = state => {
   return {
     user: state.user.currentUser,
-    currentChannel: state.channel.currentChannel
+    currentChannel: state.channel.currentChannel,
+    isPrivateChannel: state.channel.isPrivateChannel
   };
 };
 

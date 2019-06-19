@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { setCurrentChannel, setPrivateChannel } from "../../actions";
+import { setCurrentChannel, setPrivateChannel } from "../../store/actions/index";
 import firebase from "../../Firebase/firebaseConfig";
 
 class DirectMessages extends React.Component {
@@ -85,8 +85,8 @@ class DirectMessages extends React.Component {
       id: channelId,
       name: user.name
     };
-    // this.props.setCurrentChannel(channelData);
-    // this.props.setPrivateChannel(true);
+    this.props.setCurrentChannel(channelData);
+    this.props.setPrivateChannel(true);
     this.setActiveChannel(user.uid);
   };
 
@@ -107,7 +107,7 @@ class DirectMessages extends React.Component {
     return (
       <Menu.Menu className="menu">
         <Menu.Item>
-          <span>
+          <span className='title'>
             <Icon name="mail" /> DIRECT MESSAGES
           </span>{" "}
           ({users.length})
