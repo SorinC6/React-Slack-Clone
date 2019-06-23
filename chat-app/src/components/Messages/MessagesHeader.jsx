@@ -17,7 +17,7 @@ const MessegesHeader = props => {
         <span>
           {channelName}
           {!isPrivateChannel && (
-            <Icon name={"star outline"} color="black" onClick={handleStar} />
+            <Icon name={"star outline"} color="black"  />
           )}
         </span>
         <Header.Subheader>{numUniqueUsers}</Header.Subheader>

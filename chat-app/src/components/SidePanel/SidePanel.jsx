@@ -20,7 +20,7 @@ const SidePanel = props => {
       }}
     >
       <UserPanel />
-      <Starred />
+
       <Channels />
       <DirectMessages currentUser={props.user} />
     </Menu>

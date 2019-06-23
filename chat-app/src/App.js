@@ -6,7 +6,7 @@ import Messages from "./components/Messages/Messages";
 import MetaPanel from "./components/MetaPanel/MetaPanel";
 import styled from "styled-components";
 import { connect } from "react-redux";
-
+//sdsdsdsd
 const App = props => {
   //console.log(props.currentChannel);
   return (
